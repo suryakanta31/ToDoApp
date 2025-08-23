@@ -1,14 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 function App() {
   const [todos, setTodos] = useState([]);
   const [newTodo, setNewTodo] = useState("");
+
+  // Load demo todos automatically on first render
+  useEffect(() => {
+    const demoTodos = [
+      { id: 1, title: "Learn React", completed: false },
+      { id: 2, title: "Build a Todo App", completed: false },
+      { id: 3, title: "Practice JavaScript", completed: false },
+    ];
+    setTodos(demoTodos);
+  }, []);
 
   const handleAdd = () => {
     if (newTodo.trim() === "") return;
     const todo = {
       id: Date.now(),
       title: newTodo,
+      completed: false,
     };
     setTodos([...todos, todo]);
     setNewTodo("");
@@ -29,6 +40,14 @@ function App() {
     }
   };
 
+  const handleComplete = (id) => {
+    setTodos(
+      todos.map((todo) =>
+        todo.id === id ? { ...todo, completed: !todo.completed } : todo
+      )
+    );
+  };
+
   return (
     <div style={{ padding: "20px" }}>
       <h1>Todo App</h1>
@@ -42,10 +61,19 @@ function App() {
 
       <ul>
         {todos.map((todo) => (
-          <li key={todo.id}>
+          <li
+            key={todo.id}
+            style={{
+              textDecoration: todo.completed ? "line-through" : "none",
+              color: todo.completed ? "gray" : "black",
+            }}
+          >
             {todo.title}
             <button onClick={() => handleUpdate(todo.id)}>Edit</button>
             <button onClick={() => handleDelete(todo.id)}>Delete</button>
+            <button onClick={() => handleComplete(todo.id)}>
+              {todo.completed ? "Undo" : "Complete"}
+            </button>
           </li>
         ))}
       </ul>
@@ -54,3 +82,4 @@ function App() {
 }
 
 export default App;
+
