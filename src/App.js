@@ -7,9 +7,9 @@ function App() {
   // Load demo todos automatically on first render
   useEffect(() => {
     const demoTodos = [
-      { id: 1, title: "Learn React", completed: false },
-      { id: 2, title: "Build a Todo App", completed: false },
-      { id: 3, title: "Practice JavaScript", completed: false },
+      { id: 1, title: "Welcome to my Todo", completed: false },
+      { id: 2, title: "Use this Todo App", completed: false },
+      { id: 3, title: "For A Demo ---->", completed: false },
     ];
     setTodos(demoTodos);
   }, []);
